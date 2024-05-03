@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script
+      crossorigin
+      type="text/javascript"
+      src="https://codesandbox.io/static/js/vendors~app~embed~sandbox-startup.1c90fe343.chunk.js"
+    ></script>
+    <script
+      crossorigin
+      type="text/javascript"
+      src="https://codesandbox.io/static/js/default~app~embed~sandbox~sandbox-startup.50b1b6fe8.chunk.js"
+    ></script>
+    <script
+      crossorigin
+      type="text/javascript"
+      src="https://codesandbox.io/static/js/sandbox-startup.26dbbdb40.js"
+    ></script>
+
+    <script
+      src="//codesandbox.io/static/browserfs12/browserfs.min.js"
+      type="text/javascript"
+    ></script>
+
+    <script>
+      window.process = BrowserFS.BFSRequire("process");
+      window.Buffer = BrowserFS.BFSRequire("buffer").Buffer;
+    </script>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="src/styles.css" />
+    <title>My weather application</title>
+    <link rel="manifest" href="/manifest.json" />
+  </head>
+  <body>
+    <div class="weather-app">
+      <header>
+        <form id="search-form">
+          <input
+            type="search"
+            placeholder="Enter a city.."
+            required
+            class="search-input"
+            id="search-input"
+          />
+          <input type="submit" value="Search" class="search-button" />
+        </form>
+      </header>
+      <main>
+        <div class="current-weather">
+          <div>
+            <h1 class="current-city" id="current-city">Paris</h1>
+            <p class="current-details">
+              <span id="current-date"></span>, moderate rain <br />
+              Humidity: <strong>87%</strong>, Wind: <strong>7.2km/h</strong>
+            </p>
+          </div>
+          <div class="current-temperature">
+            <span class="current-temperature-icon">☀️</span
+            ><span class="current-temperature-value" id="current-temperature"
+              >24</span
+            ><span class="current-temperature-unit">°C</span>
+          </div>
+        </div>
+      </main>
+      <footer>
+        <p>
+          This project was coded by
+          <a href="#" target="_blank">Janika Matchingtouch</a>
+        </p>
+      </footer>
+    </div>
+    <script
+      crossorigin
+      type="text/javascript"
+      src="https://codesandbox.io/static/js/vendors~app~codemirror-editor~monaco-editor~sandbox.a0a9d9986.chunk.js"
+    ></script>
+    <script
+      crossorigin
+      type="text/javascript"
+      src="https://codesandbox.io/static/js/common-sandbox.09f563264.chunk.js"
+    ></script>
+    <script
+      crossorigin
+      type="text/javascript"
+      src="https://codesandbox.io/static/js/vendors~app~sandbox.d07ab9245.chunk.js"
+    ></script>
+    <script
+      crossorigin
+      type="text/javascript"
+      src="https://codesandbox.io/static/js/vendors~sandbox.cb6b5ecc4.chunk.js"
+    ></script>
+    <script
+      crossorigin
+      type="text/javascript"
+      src="https://codesandbox.io/static/js/default~app~embed~sandbox.6938b23de.chunk.js"
+    ></script>
+    <script
+      crossorigin
+      type="text/javascript"
+      src="https://codesandbox.io/static/js/sandbox.adb260837.js"
+    ></script>
+    <script
+      crossorigin
+      type="text/javascript"
+      src="https://codesandbox.io/static/js/banner.d9cb10a38.js"
+    ></script>
+    <script>
+      window.__SANDBOX_DATA__ = {
+        data: {
+          transpiledModules: {
+            "/src/styles.css:": {
+              query: "",
+              module: {
+                code: 'body {\n  background: #f9f7fe;\n  font-family: "Roboto", sans-serif;\n}\n\na {\n  color: #885df1;\n}\n\n.weather-app {\n  background: white;\n  max-width: 600px;\n  margin: 60px auto;\n  padding: 30px;\n  border-radius: 10px;\n  box-shadow: 0 30px 50px rgba(65, 50, 100, 0.08);\n}\n\nheader {\n  border-bottom: 1px solid #f9f7fe;\n  padding-bottom: 30px;\n}\n\n.search-input {\n  background-color: #f9f7fe;\n  border: none;\n  color: rgba(39, 33, 66, 0.4);\n  font-size: 16px;\n  padding: 20px;\n  width: 75%;\n  border-radius: 6px;\n}\n\n.search-button {\n  margin-left: 5px;\n  font-size: 16px;\n  background-color: #885df1;\n  color: white;\n  border: none;\n  padding: 20px;\n  line-height: 1;\n  border-radius: 5px;\n}\n\nmain {\n  padding: 30px 0;\n}\n\n.current-temperature {\n  font-size: 48px;\n}\n\n.current-weather {\n  display: flex;\n  justify-content: space-between;\n}\n\n.current-city {\n  font-size: 38px;\n  font-weight: 900;\n  margin: 0;\n}\n.current-details {\n  color: rgba(39, 33, 66, 0.4);\n  font-size: 16px;\n  font-weight: 400;\n  line-height: 24px;\n}\n\n.current-details strong {\n  color: #f65282;\n}\n\n.current-temperature-icon {\n  position: relative;\n  top: -8px;\n  font-size: 40px;\n  margin-right: 10px;\n}\n\n.current-temperature-value {\n  font-size: 80px;\n  font-weight: bold;\n}\n\n.current-temperature-unit {\n  font-size: 28px;\n  position: relative;\n  top: -38px;\n}\n\nfooter {\n  border-top: 1px solid #f9f7fe;\n  text-align: center;\n  padding-top: 15px;\n\n  color: rgba(39, 33, 66, 0.4);\n}\n',
+                path: "/src/styles.css",
+              },
+              isEntry: true,
+              isTestFile: false,
+              sourceEqualsCompiled: false,
+              childModules: [],
+              dependencies: [],
+              initiators: ["/index.html:"],
+              transpilationDependencies: [],
+              transpilationInitiators: [],
+              asyncDependencies: [],
+              warnings: [],
+              hasMissingDependencies: false,
+              source: {
+                fileName: "/src/styles.css",
+                compiledCode:
+                  "\nfunction createStyleNode(id, content) {\n  var styleNode =\n    document.getElementById(id) || document.createElement('style');\n\n  styleNode.setAttribute('id', id);\n  styleNode.type = 'text/css';\n  if (styleNode.styleSheet) {\n    styleNode.styleSheet.cssText = content;\n  } else {\n    styleNode.innerHTML = '';\n    styleNode.appendChild(document.createTextNode(content));\n  }\n  document.head.appendChild(styleNode);\n}\n\ncreateStyleNode(\n  \"/src/styles.css:-css\",\n  \"body {\\n  background: #f9f7fe;\\n  font-family: \\\"Roboto\\\", sans-serif;\\n}\\n\\na {\\n  color: #885df1;\\n}\\n\\n.weather-app {\\n  background: white;\\n  max-width: 600px;\\n  margin: 60px auto;\\n  padding: 30px;\\n  border-radius: 10px;\\n  box-shadow: 0 30px 50px rgba(65, 50, 100, 0.08);\\n}\\n\\nheader {\\n  border-bottom: 1px solid #f9f7fe;\\n  padding-bottom: 30px;\\n}\\n\\n.search-input {\\n  background-color: #f9f7fe;\\n  border: none;\\n  color: rgba(39, 33, 66, 0.4);\\n  font-size: 16px;\\n  padding: 20px;\\n  width: 75%;\\n  border-radius: 6px;\\n}\\n\\n.search-button {\\n  margin-left: 5px;\\n  font-size: 16px;\\n  background-color: #885df1;\\n  color: white;\\n  border: none;\\n  padding: 20px;\\n  line-height: 1;\\n  border-radius: 5px;\\n}\\n\\nmain {\\n  padding: 30px 0;\\n}\\n\\n.current-temperature {\\n  font-size: 48px;\\n}\\n\\n.current-weather {\\n  display: flex;\\n  justify-content: space-between;\\n}\\n\\n.current-city {\\n  font-size: 38px;\\n  font-weight: 900;\\n  margin: 0;\\n}\\n.current-details {\\n  color: rgba(39, 33, 66, 0.4);\\n  font-size: 16px;\\n  font-weight: 400;\\n  line-height: 24px;\\n}\\n\\n.current-details strong {\\n  color: #f65282;\\n}\\n\\n.current-temperature-icon {\\n  position: relative;\\n  top: -8px;\\n  font-size: 40px;\\n  margin-right: 10px;\\n}\\n\\n.current-temperature-value {\\n  font-size: 80px;\\n  font-weight: bold;\\n}\\n\\n.current-temperature-unit {\\n  font-size: 28px;\\n  position: relative;\\n  top: -38px;\\n}\\n\\nfooter {\\n  border-top: 1px solid #f9f7fe;\\n  text-align: center;\\n  padding-top: 15px;\\n\\n  color: rgba(39, 33, 66, 0.4);\\n}\\n\"\n);\n\n\n",
+                sourceEqualsCompiled: false,
+              },
+            },
+            "/index.html:": {
+              query: "",
+              module: {
+                code: '\u003c!DOCTYPE html>\n\u003chtml lang="en">\n  \u003chead>\n    \u003cmeta charset="UTF-8" />\n    \u003cmeta name="viewport" content="width=device-width, initial-scale=1.0" />\n    \u003clink rel="preconnect" href="https://fonts.googleapis.com" />\n    \u003clink rel="preconnect" href="https://fonts.gstatic.com" crossorigin />\n    \u003clink\n      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"\n      rel="stylesheet"\n    />\n    \u003cscript src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js">\u003c/script>\n    \u003clink rel="stylesheet" href="src/styles.css" />\n    \u003ctitle>My weather application\u003c/title>\n  \u003c/head>\n  \u003cbody>\n    \u003cdiv class="weather-app">\n      \u003cheader>\n        \u003cform id="search-form">\n          \u003cinput\n            type="search"\n            placeholder="Enter a city.."\n            required\n            class="search-input"\n            id="search-input"\n          />\n          \u003cinput type="submit" value="Search" class="search-button" />\n        \u003c/form>\n      \u003c/header>\n      \u003cmain>\n        \u003cdiv class="current-weather">\n          \u003cdiv>\n            \u003ch1 class="current-city" id="current-city">Paris\u003c/h1>\n            \u003cp class="current-details">\n              \u003cspan id="current-date">\u003c/span>, moderate rain \u003cbr />\n              Humidity: \u003cstrong>87%\u003c/strong>, Wind: \u003cstrong>7.2km/h\u003c/strong>\n            \u003c/p>\n          \u003c/div>\n          \u003cdiv class="current-temperature">\n            \u003cspan class="current-temperature-icon">☀️\u003c/span\n            >\u003cspan class="current-temperature-value" id="current-temperature"\n              >24\u003c/span\n            >\u003cspan class="current-temperature-unit">°C\u003c/span>\n          \u003c/div>\n        \u003c/div>\n      \u003c/main>\n      \u003cfooter>\n        \u003cp>\n          This project was coded by\n          \u003ca href="#" target="_blank">Matt Delac\u003c/a> and is\n          \u003ca href="#" target="_blank"> on GitHub\u003c/a> and\n          \u003ca href="#" target="_blank">hosted on Netlify\u003c/a>\n        \u003c/p>\n      \u003c/footer>\n    \u003c/div>\n  \u003c/body>\n  \u003cscript src="src/index.js">\u003c/script>\n\u003c/html>\n',
+                path: "/index.html",
+              },
+              isEntry: true,
+              isTestFile: false,
+              sourceEqualsCompiled: false,
+              childModules: [],
+              dependencies: ["/src/styles.css:", "/src/index.js:"],
+              initiators: [],
+              transpilationDependencies: [],
+              transpilationInitiators: [],
+              asyncDependencies: [],
+              warnings: [],
+              hasMissingDependencies: false,
+              source: {
+                fileName: "/index.html",
+                compiledCode:
+                  "\nfunction loadResources() {\n\trequire(\"./src/styles.css\");\n\n\trequire(\"./src/index.js\");\n\n}\nif (document.readyState !== 'complete') {\n  window.addEventListener('load', function() { loadResources() });\n} else {\n  loadResources();\n}\n\n",
+                sourceEqualsCompiled: false,
+              },
+            },
+            "/src/index.js:": {
+              query: "",
+              module: {
+                code: 'function displayTemperature(response) {\n  let temperatureElement = document.querySelector("#current-temperature");\n  let temperature = Math.round(response.data.temperature.current);\n  let cityElement = document.querySelector("#current-city");\n  cityElement.innerHTML = response.data.city;\n  temperatureElement.innerHTML = temperature;\n}\n\nfunction search(event) {\n  event.preventDefault();\n  let searchInputElement = document.querySelector("#search-input");\n  let city = searchInputElement.value;\n\n  let apiKey = "b2a5adcct04b33178913oc335f405433";\n  let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;\n\n  axios.get(apiUrl).then(displayTemperature);\n}\n\nfunction formatDate(date) {\n  let minutes = date.getMinutes();\n  let hours = date.getHours();\n  let day = date.getDay();\n\n  if (minutes \u003c 10) {\n    minutes = `0${minutes}`;\n  }\n\n  if (hours \u003c 10) {\n    hours = `0${hours}`;\n  }\n\n  let days = [\n    "Sunday",\n    "Monday",\n    "Tuesday",\n    "Wednesday",\n    "Thursday",\n    "Friday",\n    "Saturday"\n  ];\n\n  let formattedDay = days[day];\n  return `${formattedDay} ${hours}:${minutes}`;\n}\n\nlet searchForm = document.querySelector("#search-form");\nsearchForm.addEventListener("submit", search);\n\nlet currentDateELement = document.querySelector("#current-date");\nlet currentDate = new Date();\n\ncurrentDateELement.innerHTML = formatDate(currentDate);\n',
+                path: "/src/index.js",
+              },
+              isEntry: true,
+              isTestFile: false,
+              sourceEqualsCompiled: false,
+              childModules: [],
+              dependencies: [
+                "/node_modules/@babel/runtime/package.json:",
+                "/node_modules/@babel/runtime/helpers/interopRequireDefault.js:",
+                "/node_modules/@babel/runtime/helpers/interopRequireWildcard.js:",
+              ],
+              initiators: ["/index.html:"],
+              transpilationDependencies: [],
+              transpilationInitiators: [],
+              asyncDependencies: [],
+              warnings: [],
+              hasMissingDependencies: false,
+              source: {
+                fileName: "/src/index.js",
+                compiledCode:
+                  '"use strict";\n\nfunction displayTemperature(response) {\n  var temperatureElement = document.querySelector("#current-temperature");\n  var temperature = Math.round(response.data.temperature.current);\n  var cityElement = document.querySelector("#current-city");\n  cityElement.innerHTML = response.data.city;\n  temperatureElement.innerHTML = temperature;\n}\nfunction search(event) {\n  event.preventDefault();\n  var searchInputElement = document.querySelector("#search-input");\n  var city = searchInputElement.value;\n  var apiKey = "b2a5adcct04b33178913oc335f405433";\n  var apiUrl = "https://api.shecodes.io/weather/v1/current?query=".concat(city, "&key=").concat(apiKey, "&units=metric");\n  axios.get(apiUrl).then(displayTemperature);\n}\nfunction formatDate(date) {\n  var minutes = date.getMinutes();\n  var hours = date.getHours();\n  var day = date.getDay();\n  if (minutes \u003c 10) {\n    minutes = "0".concat(minutes);\n  }\n  if (hours \u003c 10) {\n    hours = "0".concat(hours);\n  }\n  var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];\n  var formattedDay = days[day];\n  return "".concat(formattedDay, " ").concat(hours, ":").concat(minutes);\n}\nvar searchForm = document.querySelector("#search-form");\nsearchForm.addEventListener("submit", search);\nvar currentDateELement = document.querySelector("#current-date");\nvar currentDate = new Date();\ncurrentDateELement.innerHTML = formatDate(currentDate);\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6WyJkaXNwbGF5VGVtcGVyYXR1cmUiLCJyZXNwb25zZSIsInRlbXBlcmF0dXJlRWxlbWVudCIsImRvY3VtZW50IiwicXVlcnlTZWxlY3RvciIsInRlbXBlcmF0dXJlIiwiTWF0aCIsInJvdW5kIiwiZGF0YSIsImN1cnJlbnQiLCJjaXR5RWxlbWVudCIsImlubmVySFRNTCIsImNpdHkiLCJzZWFyY2giLCJldmVudCIsInByZXZlbnREZWZhdWx0Iiwic2VhcmNoSW5wdXRFbGVtZW50IiwidmFsdWUiLCJhcGlLZXkiLCJhcGlVcmwiLCJjb25jYXQiLCJheGlvcyIsImdldCIsInRoZW4iLCJmb3JtYXREYXRlIiwiZGF0ZSIsIm1pbnV0ZXMiLCJnZXRNaW51dGVzIiwiaG91cnMiLCJnZXRIb3VycyIsImRheSIsImdldERheSIsImRheXMiLCJmb3JtYXR0ZWREYXkiLCJzZWFyY2hGb3JtIiwiYWRkRXZlbnRMaXN0ZW5lciIsImN1cnJlbnREYXRlRUxlbWVudCIsImN1cnJlbnREYXRlIiwiRGF0ZSJdLCJzb3VyY2VzIjpbIi9zcmMvaW5kZXguanMiXSwic291cmNlc0NvbnRlbnQiOlsiZnVuY3Rpb24gZGlzcGxheVRlbXBlcmF0dXJlKHJlc3BvbnNlKSB7XG4gIGxldCB0ZW1wZXJhdHVyZUVsZW1lbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKFwiI2N1cnJlbnQtdGVtcGVyYXR1cmVcIik7XG4gIGxldCB0ZW1wZXJhdHVyZSA9IE1hdGgucm91bmQocmVzcG9uc2UuZGF0YS50ZW1wZXJhdHVyZS5jdXJyZW50KTtcbiAgbGV0IGNpdHlFbGVtZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3RvcihcIiNjdXJyZW50LWNpdHlcIik7XG4gIGNpdHlFbGVtZW50LmlubmVySFRNTCA9IHJlc3BvbnNlLmRhdGEuY2l0eTtcbiAgdGVtcGVyYXR1cmVFbGVtZW50LmlubmVySFRNTCA9IHRlbXBlcmF0dXJlO1xufVxuXG5mdW5jdGlvbiBzZWFyY2goZXZlbnQpIHtcbiAgZXZlbnQucHJldmVudERlZmF1bHQoKTtcbiAgbGV0IHNlYXJjaElucHV0RWxlbWVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoXCIjc2VhcmNoLWlucHV0XCIpO1xuICBsZXQgY2l0eSA9IHNlYXJjaElucHV0RWxlbWVudC52YWx1ZTtcblxuICBsZXQgYXBpS2V5ID0gXCJiMmE1YWRjY3QwNGIzMzE3ODkxM29jMzM1ZjQwNTQzM1wiO1xuICBsZXQgYXBpVXJsID0gYGh0dHBzOi8vYXBpLnNoZWNvZGVzLmlvL3dlYXRoZXIvdjEvY3VycmVudD9xdWVyeT0ke2NpdHl9JmtleT0ke2FwaUtleX0mdW5pdHM9bWV0cmljYDtcblxuICBheGlvcy5nZXQoYXBpVXJsKS50aGVuKGRpc3BsYXlUZW1wZXJhdHVyZSk7XG59XG5cbmZ1bmN0aW9uIGZvcm1hdERhdGUoZGF0ZSkge1xuICBsZXQgbWludXRlcyA9IGRhdGUuZ2V0TWludXRlcygpO1xuICBsZXQgaG91cnMgPSBkYXRlLmdldEhvdXJzKCk7XG4gIGxldCBkYXkgPSBkYXRlLmdldERheSgpO1xuXG4gIGlmIChtaW51dGVzIDwgMTApIHtcbiAgICBtaW51dGVzID0gYDAke21pbnV0ZXN9YDtcbiAgfVxuXG4gIGlmIChob3VycyA8IDEwKSB7XG4gICAgaG91cnMgPSBgMCR7aG91cnN9YDtcbiAgfVxuXG4gIGxldCBkYXlzID0gW1xuICAgIFwiU3VuZGF5XCIsXG4gICAgXCJNb25kYXlcIixcbiAgICBcIlR1ZXNkYXlcIixcbiAgICBcIldlZG5lc2RheVwiLFxuICAgIFwiVGh1cnNkYXlcIixcbiAgICBcIkZyaWRheVwiLFxuICAgIFwiU2F0dXJkYXlcIlxuICBdO1xuXG4gIGxldCBmb3JtYXR0ZWREYXkgPSBkYXlzW2RheV07XG4gIHJldHVybiBgJHtmb3JtYXR0ZWREYXl9ICR7aG91cnN9OiR7bWludXRlc31gO1xufVxuXG5sZXQgc2VhcmNoRm9ybSA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoXCIjc2VhcmNoLWZvcm1cIik7XG5zZWFyY2hGb3JtLmFkZEV2ZW50TGlzdGVuZXIoXCJzdWJtaXRcIiwgc2VhcmNoKTtcblxubGV0IGN1cnJlbnREYXRlRUxlbWVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoXCIjY3VycmVudC1kYXRlXCIpO1xubGV0IGN1cnJlbnREYXRlID0gbmV3IERhdGUoKTtcblxuY3VycmVudERhdGVFTGVtZW50LmlubmVySFRNTCA9IGZvcm1hdERhdGUoY3VycmVudERhdGUpO1xuIl0sIm1hcHBpbmdzIjoiOztBQUFBLFNBQVNBLGtCQUFrQkEsQ0FBQ0MsUUFBUSxFQUFFO0VBQ3BDLElBQUlDLGtCQUFrQixHQUFHQyxRQUFRLENBQUNDLGFBQWEsQ0FBQyxzQkFBc0IsQ0FBQztFQUN2RSxJQUFJQyxXQUFXLEdBQUdDLElBQUksQ0FBQ0MsS0FBSyxDQUFDTixRQUFRLENBQUNPLElBQUksQ0FBQ0gsV0FBVyxDQUFDSSxPQUFPLENBQUM7RUFDL0QsSUFBSUMsV0FBVyxHQUFHUCxRQUFRLENBQUNDLGFBQWEsQ0FBQyxlQUFlLENBQUM7RUFDekRNLFdBQVcsQ0FBQ0MsU0FBUyxHQUFHVixRQUFRLENBQUNPLElBQUksQ0FBQ0ksSUFBSTtFQUMxQ1Ysa0JBQWtCLENBQUNTLFNBQVMsR0FBR04sV0FBVztBQUM1QztBQUVBLFNBQVNRLE1BQU1BLENBQUNDLEtBQUssRUFBRTtFQUNyQkEsS0FBSyxDQUFDQyxjQUFjLENBQUMsQ0FBQztFQUN0QixJQUFJQyxrQkFBa0IsR0FBR2IsUUFBUSxDQUFDQyxhQUFhLENBQUMsZUFBZSxDQUFDO0VBQ2hFLElBQUlRLElBQUksR0FBR0ksa0JBQWtCLENBQUNDLEtBQUs7RUFFbkMsSUFBSUMsTUFBTSxHQUFHLGtDQUFrQztFQUMvQyxJQUFJQyxNQUFNLHVEQUFBQyxNQUFBLENBQXVEUixJQUFJLFdBQUFRLE1BQUEsQ0FBUUYsTUFBTSxrQkFBZTtFQUVsR0csS0FBSyxDQUFDQyxHQUFHLENBQUNILE1BQU0sQ0FBQyxDQUFDSSxJQUFJLENBQUN2QixrQkFBa0IsQ0FBQztBQUM1QztBQUVBLFNBQVN3QixVQUFVQSxDQUFDQyxJQUFJLEVBQUU7RUFDeEIsSUFBSUMsT0FBTyxHQUFHRCxJQUFJLENBQUNFLFVBQVUsQ0FBQyxDQUFDO0VBQy9CLElBQUlDLEtBQUssR0FBR0gsSUFBSSxDQUFDSSxRQUFRLENBQUMsQ0FBQztFQUMzQixJQUFJQyxHQUFHLEdBQUdMLElBQUksQ0FBQ00sTUFBTSxDQUFDLENBQUM7RUFFdkIsSUFBSUwsT0FBTyxHQUFHLEVBQUUsRUFBRTtJQUNoQkEsT0FBTyxPQUFBTixNQUFBLENBQU9NLE9BQU8sQ0FBRTtFQUN6QjtFQUVBLElBQUlFLEtBQUssR0FBRyxFQUFFLEVBQUU7SUFDZEEsS0FBSyxPQUFBUixNQUFBLENBQU9RLEtBQUssQ0FBRTtFQUNyQjtFQUVBLElBQUlJLElBQUksR0FBRyxDQUNULFFBQVEsRUFDUixRQUFRLEVBQ1IsU0FBUyxFQUNULFdBQVcsRUFDWCxVQUFVLEVBQ1YsUUFBUSxFQUNSLFVBQVUsQ0FDWDtFQUVELElBQUlDLFlBQVksR0FBR0QsSUFBSSxDQUFDRixHQUFHLENBQUM7RUFDNUIsVUFBQVYsTUFBQSxDQUFVYSxZQUFZLE9BQUFiLE1BQUEsQ0FBSVEsS0FBSyxPQUFBUixNQUFBLENBQUlNLE9BQU87QUFDNUM7QUFFQSxJQUFJUSxVQUFVLEdBQUcvQixRQUFRLENBQUNDLGFBQWEsQ0FBQyxjQUFjLENBQUM7QUFDdkQ4QixVQUFVLENBQUNDLGdCQUFnQixDQUFDLFFBQVEsRUFBRXRCLE1BQU0sQ0FBQztBQUU3QyxJQUFJdUIsa0JBQWtCLEdBQUdqQyxRQUFRLENBQUNDLGFBQWEsQ0FBQyxlQUFlLENBQUM7QUFDaEUsSUFBSWlDLFdBQVcsR0FBRyxJQUFJQyxJQUFJLENBQUMsQ0FBQztBQUU1QkYsa0JBQWtCLENBQUN6QixTQUFTLEdBQUdhLFVBQVUsQ0FBQ2EsV0FBVyxDQUFDIn0=',
+                sourceEqualsCompiled: false,
+              },
+            },
+            "/node_modules/@babel/runtime/helpers/interopRequireDefault.js:": {
+              query: "",
+              module: {
+                path: "/node_modules/@babel/runtime/helpers/interopRequireDefault.js",
+                code: 'function _interopRequireDefault(obj) {\n  return obj && obj.__esModule ? obj : {\n    "default": obj\n  };\n}\nmodule.exports = _interopRequireDefault, module.exports.__esModule = true, module.exports["default"] = module.exports;',
+                downloaded: true,
+              },
+              isEntry: false,
+              isTestFile: false,
+              sourceEqualsCompiled: true,
+              childModules: [],
+              dependencies: [],
+              initiators: ["/src/index.js:"],
+              transpilationDependencies: [],
+              transpilationInitiators: [],
+              asyncDependencies: [],
+              warnings: [],
+              hasMissingDependencies: false,
+              source: null,
+            },
+            "/node_modules/@babel/runtime/helpers/interopRequireWildcard.js:": {
+              query: "",
+              module: {
+                path: "/node_modules/@babel/runtime/helpers/interopRequireWildcard.js",
+                code: 'var _typeof = require("./typeof.js")["default"];\nfunction _getRequireWildcardCache(e) {\n  if ("function" != typeof WeakMap) return null;\n  var r = new WeakMap(),\n    t = new WeakMap();\n  return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {\n    return e ? t : r;\n  })(e);\n}\nfunction _interopRequireWildcard(e, r) {\n  if (!r && e && e.__esModule) return e;\n  if (null === e || "object" != _typeof(e) && "function" != typeof e) return {\n    "default": e\n  };\n  var t = _getRequireWildcardCache(r);\n  if (t && t.has(e)) return t.get(e);\n  var n = {\n      __proto__: null\n    },\n    a = Object.defineProperty && Object.getOwnPropertyDescriptor;\n  for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {\n    var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;\n    i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];\n  }\n  return n["default"] = e, t && t.set(e, n), n;\n}\nmodule.exports = _interopRequireWildcard, module.exports.__esModule = true, module.exports["default"] = module.exports;',
+                downloaded: true,
+              },
+              isEntry: false,
+              isTestFile: false,
+              sourceEqualsCompiled: true,
+              childModules: [],
+              dependencies: ["/node_modules/@babel/runtime/helpers/typeof.js:"],
+              initiators: ["/src/index.js:"],
+              transpilationDependencies: [],
+              transpilationInitiators: [],
+              asyncDependencies: [],
+              warnings: [],
+              hasMissingDependencies: false,
+              source: null,
+            },
+            "/node_modules/@babel/runtime/helpers/typeof.js:": {
+              query: "",
+              module: {
+                path: "/node_modules/@babel/runtime/helpers/typeof.js",
+                code: 'function _typeof(o) {\n  "@babel/helpers - typeof";\n\n  return (module.exports = _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) {\n    return typeof o;\n  } : function (o) {\n    return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;\n  }, module.exports.__esModule = true, module.exports["default"] = module.exports), _typeof(o);\n}\nmodule.exports = _typeof, module.exports.__esModule = true, module.exports["default"] = module.exports;',
+                downloaded: true,
+              },
+              isEntry: false,
+              isTestFile: false,
+              sourceEqualsCompiled: true,
+              childModules: [],
+              dependencies: [],
+              initiators: [
+                "/node_modules/@babel/runtime/helpers/interopRequireWildcard.js:",
+              ],
+              transpilationDependencies: [],
+              transpilationInitiators: [],
+              asyncDependencies: [],
+              warnings: [],
+              hasMissingDependencies: false,
+              source: null,
+            },
+          },
+          cachedPaths: {
+            "/": {
+              "./src/styles.css": "/src/styles.css",
+              "./src/index.js": "/src/index.js",
+            },
+          },
+          version: "https://codesandbox.io/static/js/sandbox.adb260837.js",
+          timestamp: 1710441668607,
+          configurations: {
+            package: {
+              path: "/package.json",
+              code: '{\n  "name": "api-homework-solution",\n  "version": "1.0.0",\n  "description": "",\n  "main": "index.html",\n  "scripts": {\n    "start": "parcel index.html --open",\n    "build": "parcel build index.html"\n  },\n  "dependencies": {},\n  "devDependencies": {\n    "@babel/core": "7.2.0",\n    "parcel-bundler": "^1.6.1"\n  },\n  "keywords": []\n}',
+              generated: false,
+              parsed: {
+                name: "api-homework-solution",
+                version: "1.0.0",
+                description: "",
+                main: "index.html",
+                scripts: {
+                  start: "parcel index.html --open",
+                  build: "parcel build index.html",
+                },
+                dependencies: {},
+                devDependencies: {
+                  "@babel/core": "7.2.0",
+                  "parcel-bundler": "^1.6.1",
+                },
+                keywords: [],
+              },
+            },
+            sandbox: {
+              path: "/sandbox.config.json",
+              code: '{\n  "infiniteLoopProtection": true,\n  "hardReloadOnChange": false,\n  "view": "browser"\n}',
+              generated: true,
+              parsed: {
+                infiniteLoopProtection: true,
+                hardReloadOnChange: false,
+                view: "browser",
+              },
+            },
+            now: {
+              path: "/vercel.json",
+              code: "{}",
+              generated: true,
+              parsed: {},
+            },
+            babel: {
+              path: "/.babelrc",
+              code: '{\n  "presets": [\n    "env"\n  ],\n  "plugins": [\n    "transform-runtime"\n  ],\n  "parserOpts": {\n    "plugins": [\n      "dynamicImport"\n    ]\n  }\n}',
+              generated: true,
+              parsed: {
+                presets: ["env"],
+                plugins: ["transform-runtime"],
+                parserOpts: { plugins: ["dynamicImport"] },
+              },
+            },
+            typescript: {
+              path: "/tsconfig.json",
+              code: '{\n  "compilerOptions": {\n    "module": "commonjs",\n    "jsx": "preserve",\n    "esModuleInterop": true,\n    "sourceMap": true,\n    "allowJs": true,\n    "lib": [\n      "es6",\n      "dom"\n    ],\n    "rootDir": "src",\n    "moduleResolution": "node"\n  }\n}',
+              generated: true,
+              parsed: {
+                compilerOptions: {
+                  module: "commonjs",
+                  jsx: "preserve",
+                  esModuleInterop: true,
+                  sourceMap: true,
+                  allowJs: true,
+                  lib: ["es6", "dom"],
+                  rootDir: "src",
+                  moduleResolution: "node",
+                },
+              },
+            },
+          },
+          entry: "/index.html",
+          meta: {},
+          dependenciesQuery:
+            "%40babel%2Fruntime%407.24.0+node-libs-browser%402.2.1",
+        },
+        latestSha:
+          "606994F61AB0D31AE3942CF9F1D00B11091E08450DF38F2BE1DE9CC4E520A734",
+        version: "https://codesandbox.io/static/js/sandbox.adb260837.js",
+      };
+    </script>
+  </body>
+
+  <script src="src/index.js"></script>
+</html>
